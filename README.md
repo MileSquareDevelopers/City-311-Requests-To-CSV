@@ -31,7 +31,7 @@ python3 ./get_data.py -o output.csv -c 1416
 ### FAQ
 1. How do I find a cities client id?
 
-A list of known city ID's can be found here.
+A list of known city ID's can be found [here](Collections).
 Please note that the filename contains the time the list was generated, so the data could be old. You may need to consult with your communities 311 Service App or administrator.
 
 2. Does this script work with 311 services not operated by Accella's Public Stuff?
