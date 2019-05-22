@@ -7,7 +7,7 @@ class Acella_Api_Handler:
     and exports the data to a CSV.
     """
     class APIError(Exception): pass
-    PUBLICSTUFF_API_URL = 'https://vc0.publicstuff.com/api/2.0/requests_list?api_key={API_KEY}&client_id={CLIENT_ID}&device=iframe&limit={LIMIT}'
+    PUBLICSTUFF_API_URL = 'https://vc0.publicstuff.com/api/2.0/requests_list?client_id={CLIENT_ID}&device=iframe&limit={LIMIT}'
     LIMIT = 45 # Number of requests to ask from the API. Max appears to be 46.
     REQUESTS_HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20100101 Firefox/7.0.1'}
     # The fields we want saved in the CSV.
@@ -17,29 +17,18 @@ class Acella_Api_Handler:
                           'count_followers': 'Num Of Followers', 'count_supporters': 'Num Of Supporters',
                           'lat': 'Latitude', 'lon': 'Longitude', 'rank': 'Rank', 'user': 'User'}
 
-    def __init__(self, api_key, client_id, out_file):
+    def __init__(self, client_id, out_file):
         """
         This is the main method. This method makes a call to Accella's API interface requesting all public
-        :param api_key: The API key used to connect the Public Stuff API. This should be 20 characters long.
         :param client_id: The client id used to connect to the Public Stuff API.
         :param out_file: The destination file for the CSV.
         """
 
-        # Check if the API key is 20 characters.
-        if len(api_key) != 20:
-            while True:
-                print ("API key seems incorrect. It should be 20 characters. Continue?")
-                choice = input().lower()
-                if choice == 'yes' or choice == 'y':
-                    break
-                if choice == 'no' or choice == 'n':
-                    raise ValueError('API Key should be 20 characters in length.')
-                print('Invalid response. Please answer with y/n.')
         self.out_file = out_file  # The location where the csv will be saved.
         self.current_page = 0  # Tracks the current page
         self.last_page = False # Tracks if the last page was returned.
-        self.api_url = self.PUBLICSTUFF_API_URL.replace('{API_KEY}', api_key)\
-            .replace('{CLIENT_ID}', client_id)\
+
+        self.api_url = self.PUBLICSTUFF_API_URL.replace('{CLIENT_ID}', client_id)\
             .replace('{LIMIT}', str(self.LIMIT))
 
     def get_data(self):
