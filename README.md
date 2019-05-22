@@ -7,7 +7,7 @@ Using PublicStuff's API this script exports all public tickets from a communitie
 Please note this script only grabs public tickets.
 
 ### Script Prerequisites
-Built a tested on Python 3.6.
+Built and tested on Python 3.6.
 * argparse
 * requests
 * csv
